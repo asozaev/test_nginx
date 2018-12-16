@@ -5,7 +5,7 @@
   tasks:
   - name: Build image
     docker_image:
-      path: /home/asozaev/docker
+      path: .
       name: eg_sshd
 
   - name: Run container
