@@ -1,4 +1,5 @@
-- name: Create nginx image
+---
+- name: Create image
   hosts: localhost
   connection: local
   tasks:
@@ -6,3 +7,20 @@
     docker_image:
       path: /home/asozaev/docker
       name: eg_sshd
+
+  - name: Run container
+    docker_container:
+      name: test_sshd
+      image: eg_sshd
+      state: started
+      ports:
+      - "2222:22"
+      - "80:80"
+      tty: true
+      detach: true
+  
+  - name: Install nginx
+    shell: |
+      docker exec -i test_sshd bash -c 'apt-get install -y nginx; service nginx start'
+      docker cp script.sh test_sshd:/tmp/script.sh
+      docker exec test_sshd /tmp/script.sh
