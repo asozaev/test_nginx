@@ -1,0 +1,8 @@
+- name: Create nginx image
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Build image
+    docker_image:
+      path: /home/asozaev/docker
+      name: eg_sshd
